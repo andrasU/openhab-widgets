@@ -1,0 +1,82 @@
+uid: gw_Label
+tags: []
+props:
+  parameters:
+    - description: Header text
+      label: Title
+      name: Title
+      required: false
+      type: TEXT
+    - description: Color Code for the Top (html HEX code)
+      label: Color Code Top (hex)
+      name: colorCodeTop
+      required: false
+      type: TEXT
+    - description: Color Code for Text (html HEX code)
+      label: Color Code Text (hex)
+      name: colorCodeText
+      required: false
+      type: TEXT
+    - description: Background Image Url
+      label: Background Image Url
+      name: backgroundImageUrl
+      required: false
+      type: TEXT
+timestamp: Nov 28, 2021, 12:20:02 PM
+component: f7-card
+config:
+  class:
+    - no-padding
+  style:
+    --labelWidget-bg-color: '=(themeOptions.dark === "dark") ? "#3F3F3F" : "#F7F7F7"'
+    --labelWidgetRGBA-bg-color: '=(themeOptions.dark === "dark") ? "rgb(63,63,63)" : "rgb(247,247,247)"'
+    --labelWidgetTextColor: '=(themeOptions.dark === "dark") ? "#F7F7F7" : "#111111"'
+    background: '=(props.backgroundImageUrl) ? "url(" + props.backgroundImageUrl + ")" : (props.colorCodeTop) ? (props.colorCodeTop) : "#AFDFFF"'
+    background-size: cover
+    filter: '=(themeOptions.dark === "dark") ? "brightness(70%)" : "brightness(100%)"'
+slots:
+  default:
+    - component: f7-row
+      config:
+        style:
+          width: 100%
+          height: 100%
+          background: linear-gradient(118deg, rgba(48,224,255,0.2) 0%, rgba(253,134,45,0.2) 100%)
+        class:
+          - flex-direction-row
+          - align-items-center
+      slots:
+        default:
+          - component: Label
+            config:
+              text: =props.Title
+              style:
+                position: absolute
+                font-weight: 300
+                font-size: 32px
+                text-transform: none
+                z-index: 1
+                color: var(--labelWidgetTextColor)
+                filter: blur(1px) brightness(30%)
+              class:
+                - text-align-left
+                - margin-left
+                - flex-direction-row
+                - align-items-center
+                - justify-content-center
+          - component: Label
+            config:
+              text: =props.Title
+              style:
+                position: absolute
+                font-weight: 300
+                font-size: 32px
+                text-transform: none
+                z-index: 2
+                color: var(--labelWidgetTextColor)
+              class:
+                - text-align-left
+                - margin-left
+                - flex-direction-row
+                - align-items-center
+                - justify-content-center

@@ -1,0 +1,337 @@
+uid: gwm_CompButton
+tags: []
+props:
+  parameters:
+    - description: Title text
+      label: Title
+      name: Title
+      required: false
+      type: TEXT
+    - description: Subtitle text
+      label: SubTitle
+      name: SubTitle
+      required: false
+      type: TEXT
+    - description: Unique ID
+      label: Unique ID
+      name: uniqueID
+      required: false
+      type: TEXT
+    - description: Active Icon from the F7 Library
+      label: Active Icon
+      name: activeIcon
+      required: true
+      type: TEXT
+    - description: Inactive Icon from the F7 Library
+      label: Inactive Icon
+      name: inactiveIcon
+      required: true
+      type: TEXT
+    - description: Color Code for the Top Border (rgb, comma separated)
+      label: Color Code (hex)
+      name: colorCode
+      required: false
+      type: TEXT
+    - context: item
+      description: Switch item
+      label: Switch
+      name: switchItem
+      required: true
+      type: TEXT
+    - context: item
+      description: Item for Button State
+      label: Item for State
+      name: itemForState
+      required: true
+      type: TEXT
+timestamp: Nov 29, 2021, 6:53:12 PM
+component: f7-card
+config:
+  fill: false
+  style:
+    --f7-card-border-width: 2px
+    --f7-card-border-color: rgba(55, 55, 55, 0.15)
+    --f7-card-border-radius: 5px
+    --f7-button-hover-bg-color: rgba(125, 125, 125, 0.15)
+    --f7-button-pressed-bg-color: rgba(225, 125, 125, 0.15)
+    --f7-button-fill-hover-bg-color: rgba(var(--f7-theme-color-rgb), 0.07)
+    background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
+    --popupBackground: '=(themeOptions.dark === "dark") ? "#F0F0F0" : "#FFFFFF"'
+    --popupBackgroundHeader: '=(themeOptions.dark === "dark") ? "#F70707" : "#F0F0F0"'
+    --widgetTextIconColor: '=(themeOptions.dark === "dark") ? "#FFFFFF" : "#1C1C1D"'
+    --widgetTextIconColorRgb: '=(themeOptions.dark === "dark") ? "255,255,255" : "28,28,29"'
+    --widgetSliderColorRbg_End: '=(themeOptions.dark === "dark") ? "255,255,255" : "28,28,29"'
+    --widgetSliderColorRbg_Start: '=(themeOptions.dark === "dark") ? "28,28,29" : "255,255,255"'
+slots:
+  default:
+    - component: f7-row
+      config:
+        style:
+          width: 100%
+          height: 100%
+          background: '=(themeOptions.dark === "dark") ? "linear-gradient(180deg, rgba(15,32,39,1) 0%, rgba(32,58,67,1) 50%, rgba(44,83,100,1) 100%)" : "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(171,186,171,1) 100%)"'
+      slots:
+        default:
+          - component: f7-row
+            config:
+              style:
+                width: 100%
+                height: 30px
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      width: 60px
+                      position: absolute
+                      left: calc(100% - 60px)
+                      height: 40px
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-center
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: oh-toggle
+                        config:
+                          color: '=(themeOptions.dark === "dark") ? "teal" : "gray"'
+                          title: " "
+                          item: =props.switchItem
+          - component: f7-row
+            config:
+              style:
+                width: 100%
+                height: calc(100% - 40px)
+                top: 40px
+                position: absolute
+            slots:
+              default:
+                - component: f7-row
+                  config:
+                    style:
+                      width: 100%
+                      height: 100%
+                    class:
+                      - no-padding
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-flex-center
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: f7-button
+                        config:
+                          iconF7: '=items[props.itemForState].state === "ON" ? props.activeIcon : props.inactiveIcon'
+                          iconSize: 32
+                          sheetOpen: ='.'+props.uniqueID + 'sheetLightSettingMobile'
+                          style:
+                            color: var(--widgetTextIconColor)
+                            width: 100%
+                            height: 100%
+                            z-index: 2
+                            --f7-button-border-width: 0px
+                            --f7-button-border-radius: 0px
+                            --f7-button-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2)
+                          class:
+                            - display-flex
+                            - flex-direction-row
+                            - align-items-flex-start
+                            - justify-content-center
+          - component: f7-row
+            config:
+              style:
+                width: 100%
+                top: calc(100% - 30px)
+                position: absolute
+                height: 20px
+            slots:
+              default:
+                - component: f7-row
+                  config:
+                    style:
+                      width: 100%
+                      height: 100%
+                    class:
+                      - no-padding
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-flex-center
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =props.Title
+                          style:
+                            font-size: 12px
+                            color: var(--widgetTextIconColor)
+                            width: calc100%
+                            font-weight: 400
+                            text-transform: none
+                            text-align: center
+          - component: f7-row
+            config:
+              style:
+                width: 100%
+                top: calc(100% - 15px)
+                position: absolute
+                height: 20px
+            slots:
+              default:
+                - component: f7-row
+                  config:
+                    style:
+                      width: 100%
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-flex-start
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =props.SubTitle
+                          style:
+                            font-size: 10px
+                            color: var(--widgetTextIconColor)
+                            width: 100%
+                            font-weight: 300
+                            text-transform: none
+                            text-align: center
+          - component: f7-sheet
+            config:
+              class: =props.uniqueID + 'sheetLightSettingMobile'
+              backdrop: true
+              closeOnEscape: true
+              style:
+                width: 100%
+                height: 280px
+            slots:
+              default:
+                - component: f7-page
+                  config:
+                    style:
+                      background: var(--popupBackground)
+                      class:
+                        - no padding
+                        - no margin
+                  slots:
+                    default:
+                      - component: f7-navbar
+                        config: {}
+                        slots:
+                          default:
+                            - component: Label
+                              config:
+                                text: =props.Title + " - " + props.SubTitle
+                                class:
+                                  - display-flex
+                                  - flex-direction-row
+                                  - align-items-center
+                                  - justify-content-center
+                                style:
+                                  margin-left: 20px
+                                  height: 30px
+                                  font-size: 16px
+                                  color: var(--widgetTextIconColor)
+                                  width: calc(100% - 20px)
+                                  font-weight: 900
+                                  text-transform: none
+                                  text-align: left
+                            - component: f7-nav-right
+                              slots:
+                                default:
+                                  - component: f7-button
+                                    config:
+                                      iconF7: multiply_circle_fill
+                                      iconSize: 20
+                                      style:
+                                        color: var(--widgetTextIconColor)
+                                        height: 30px
+                                      class:
+                                        - display-flex
+                                        - flex-direction-row
+                                        - align-items-center
+                                        - justify-content-center
+                                      sheetClose: true
+                      - component: f7-row
+                        config:
+                          style:
+                            width: 100%
+                            height: 40px
+                            background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
+                          class:
+                            - display-flex
+                            - flex-direction-row
+                            - align-items-flex-end
+                            - justify-content-center
+                        slots:
+                          default:
+                            - component: Label
+                              config:
+                                text: ON
+                                style:
+                                  font-size: 16px
+                                  color: var(--widgetTextIconColor)
+                                  width: calc(100% - 20px)
+                                  font-weight: 600
+                                  text-transform: none
+                                  text-align: center
+                      - component: f7-row
+                        config:
+                          style:
+                            width: 100%
+                            height: 160px
+                            background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
+                          class:
+                            - display-flex
+                            - flex-direction-row
+                            - align-items-center
+                            - justify-content-center
+                        slots:
+                          default:
+                            - component: oh-toggle-card
+                              config:
+                                item: =props.switchItem
+                                outline: false
+                                noBorder: true
+                                noShadow: true
+                                color: gray
+                                style:
+                                  height: 100%
+                                class:
+                                  - display-flex
+                                  - flex-direction-row
+                                  - align-items-center
+                                  - justify-content-center
+                      - component: f7-row
+                        config:
+                          style:
+                            width: 100%
+                            height: 40px
+                            background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
+                          class:
+                            - display-flex
+                            - flex-direction-row
+                            - align-items-flex-start
+                            - justify-content-center
+                        slots:
+                          default:
+                            - component: Label
+                              config:
+                                text: OFF
+                                style:
+                                  font-size: 16px
+                                  color: var(--widgetTextIconColor)
+                                  width: calc(100% - 20px)
+                                  font-weight: 600
+                                  text-transform: none
+                                  text-align: center
+                                class:
+                                  - display-flex
+                                  - flex-direction-row
+                                  - align-items-center
+                                  - justify-content-center

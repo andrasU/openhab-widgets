@@ -1,0 +1,446 @@
+uid: gw_CompThermostat
+tags: []
+props:
+  parameters:
+    - description: Title text
+      label: Title
+      name: Title
+      required: false
+      type: TEXT
+    - description: Subtitle text
+      label: SubTitle
+      name: SubTitle
+      required: false
+      type: TEXT
+    - description: Unique ID
+      label: Unique ID
+      name: uniqueID
+      required: false
+      type: TEXT
+    - context: item
+      description: Thermostat ON/OFF switch
+      label: Toggle
+      name: onoffSwitch
+      required: true
+      type: TEXT
+    - context: item
+      description: Switch for Eco mod
+      label: Switch for Eco mod
+      name: ecoSwitch
+      required: true
+      type: TEXT
+    - context: item
+      description: Setpoint Temperature
+      label: Setpoint Temperature for Thermostat
+      name: setpointTemp
+      required: true
+      type: TEXT
+    - context: item
+      description: Measured Temperature
+      label: Measured Temperature for Thermostat
+      name: measuredTemp
+      required: true
+      type: TEXT
+    - context: item
+      description: Heating Demand
+      label: Heating Demand for Thermostat
+      name: heatingState
+      required: true
+      type: TEXT
+  parameterGroups: []
+timestamp: Nov 29, 2021, 7:20:07 PM
+component: f7-card
+config:
+  fill: false
+  style:
+    --f7-card-border-width: 2px
+    --f7-card-border-color: rgba(55, 55, 55, 0.15)
+    --f7-card-border-radius: 5px
+    --f7-button-hover-bg-color: rgba(125, 125, 125, 0.15)
+    --f7-button-pressed-bg-color: rgba(225, 125, 125, 0.15)
+    --f7-button-fill-hover-bg-color: rgba(var(--f7-theme-color-rgb), 0.07)
+    background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
+    --popupBackground: '=(themeOptions.dark === "dark") ? "#F0F0F0" : "#FFFFFF"'
+    --popupBackgroundHeader: '=(themeOptions.dark === "dark") ? "#F70707" : "#F0F0F0"'
+    --widgetTextIconColor: '=(themeOptions.dark === "dark") ? "#FFFFFF" : "#1C1C1D"'
+    --widgetTextIconColorRgb: '=(themeOptions.dark === "dark") ? "255,255,255" : "28,28,29"'
+    --widgetSliderColorRbg_End: '=(themeOptions.dark === "dark") ? "255,255,255" : "28,28,29"'
+    --widgetSliderColorRbg_Start: '=(themeOptions.dark === "dark") ? "28,28,29" : "255,255,255"'
+    --sliderKnobColorRgb: '=(themeOptions.dark === "dark") ? "#F7F7F7" : "#111111"'
+slots:
+  default:
+    - component: f7-row
+      config:
+        style:
+          width: 100%
+          height: 100%
+          background: '=(themeOptions.dark === "dark") ? "linear-gradient(180deg, rgba(15,32,39,1) 0%, rgba(32,58,67,1) 50%, rgba(44,83,100,1) 100%)" : "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(171,186,171,1) 100%)"'
+      slots:
+        default:
+          - component: f7-button
+            config:
+              sheetOpen: ='.'+props.uniqueID + 'sheetThermostat'
+              style:
+                width: 40px
+                height: 40px
+                position: absolute
+                left: calc(100% - 40px)
+              class:
+                - flex-direction-row
+                - display-flex
+                - align-items-center
+                - justify-content-center
+            slots:
+              default:
+                - component: f7-icon
+                  config:
+                    f7: thermometer
+                    size: 28
+                    style:
+                      color: var(--widgetTextIconColor)
+                      width: 100%
+                      height: 40px
+                    class:
+                      - flex-direction-row
+                      - display-flex
+                      - align-items-center
+                      - justify-content-flex-start
+          - component: f7-button
+            config:
+              sheetOpen: ='.'+props.measuredTemp + 'sheetThermostat'
+              style:
+                width: 100%
+                height: 100%
+              class:
+                - flex-direction-row
+                - display-flex
+                - align-items-center
+                - justify-content-center
+            slots:
+              default:
+                - component: Label
+                  config:
+                    text: =items[props.measuredTemp].state + " °C"
+                    style:
+                      width: 100%
+                      height: 100%
+                      font-size: 28px
+                      font-weight: 300
+                      color: var(--widgetTextIconColor)
+                      text-transform: none
+                    class:
+                      - flex-direction-row
+                      - display-flex
+                      - align-items-center
+                      - justify-content-center
+          - component: f7-row
+            config:
+              style:
+                width: 100%
+                top: calc(100% - 50px)
+                position: absolute
+                height: 20px
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      width: 100%
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-flex-start
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =props.Title
+                          style:
+                            font-size: 16px
+                            color: var(--widgetTextIconColor)
+                            left: 10px
+                            width: calc(100% - 20px)
+                            font-weight: 300
+                            text-transform: none
+                            text-align: left
+          - component: f7-row
+            config:
+              style:
+                width: 100%
+                top: calc(100% - 30px)
+                position: absolute
+                height: 20px
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      width: 100%
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-flex-start
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =props.SubTitle
+                          style:
+                            font-size: 14px
+                            color: var(--widgetTextIconColor)
+                            left: 10px
+                            width: calc(100% - 20px)
+                            font-weight: 100
+                            text-transform: none
+                            text-align: left
+          - component: f7-sheet
+            config:
+              backdrop: true
+              animate: true
+              tabletFullscreen: false
+              class: =props.uniqueID + 'sheetThermostat'
+              style:
+                height: 500px
+                --f7-popup-tablet-border-radius: 10px
+                --f7-popup-tablet-height: 450px
+                --f7-popup-box-shadow: 0px 20px 44px rgba(0, 0, 0, 0.5)
+            slots:
+              default:
+                - component: f7-page
+                  config:
+                    style:
+                      background: var(--popupBackground)
+                      class:
+                        - no padding
+                        - no margin
+                  slots:
+                    default:
+                      - component: f7-navbar
+                        config: {}
+                        slots:
+                          default:
+                            - component: Label
+                              config:
+                                text: =props.Title + " - " + props.SubTitle
+                                class:
+                                  - display-flex
+                                  - flex-direction-row
+                                  - align-items-center
+                                  - justify-content-center
+                                style:
+                                  margin-left: 20px
+                                  height: 30px
+                                  font-size: 16px
+                                  color: var(--widgetTextIconColor)
+                                  width: calc(100% - 20px)
+                                  font-weight: 900
+                                  text-transform: none
+                            - component: f7-nav-right
+                              slots:
+                                default:
+                                  - component: f7-button
+                                    config:
+                                      iconF7: multiply_circle_fill
+                                      iconSize: 20
+                                      style:
+                                        color: var(--widgetTextIconColor)
+                                        height: 30px
+                                      class:
+                                        - display-flex
+                                        - align-items-center
+                                        - justify-content-center
+                                      sheetClose: true
+                      - component: f7-row
+                        config:
+                          class:
+                            - display-flex
+                            - align-content-space-between
+                            - justify-content-center
+                          style:
+                            width: 100%
+                            height: 100%
+                        slots:
+                          default:
+                            - component: f7-row
+                              config:
+                                style:
+                                  height: 20px
+                                  width: 100%
+                            - component: f7-row
+                              config:
+                                style:
+                                  height: 40px
+                                  width: 100%
+                                class:
+                                  - align-items-center
+                              slots:
+                                default:
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        width: 20%
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        width: 40%
+                                    slots:
+                                      default:
+                                        - component: Label
+                                          config:
+                                            text: =items[props.measuredTemp].state + " °C"
+                                            style:
+                                              width: 100%
+                                              font-size: 20px
+                                              font-weight: 200
+                                            class:
+                                              - text-align-left
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        width: 20%
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        width: 20%
+                                    slots:
+                                      default:
+                                        - component: f7-icon
+                                          config:
+                                            f7: '=items[props.heatingState].state === "0" ? "thermometer_snowflake" : "thermometer_sun"'
+                                            size: 22
+                                            class:
+                                              - text-align-left
+                            - component: f7-row
+                              config:
+                                style:
+                                  height: 80px
+                                  width: 100%
+                                class:
+                                  - align-items-center
+                                  - justify-content-center
+                              slots:
+                                default:
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        width: 20%
+                                    slots:
+                                      default:
+                                        - component: oh-button
+                                          config:
+                                            icon-f7: power
+                                            iconSize: 30
+                                            text: =items[props.onoffSwitch].state
+                                            color: '=items[props.onoffSwitch].state === "ON" ? "green" : "red"'
+                                            action: toggle
+                                            actionItem: =props.onoffSwitch
+                                            actionCommand: ON
+                                            actionCommandAlt: OFF
+                                            iconColor: '=items[props.onoffSwitch].state === "ON" ? "green" : "red"'
+                                            style:
+                                              --f7-button-font-weight: 200
+                                              height: 80px
+                                              width: 100%
+                                              font-size: 16px
+                                            class:
+                                              - padding-top-half
+                                              - display-flex
+                                              - flex-direction-column
+                                              - text-align-center
+                                              - justify-content-center
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        width: 60%
+                                    slots:
+                                      default:
+                                        - component: Label
+                                          config:
+                                            text: =items[props.setpointTemp].state + " °C"
+                                            style:
+                                              width: 100%
+                                              font-size: 90px
+                                              font-weight: 100
+                                              height: 80px
+                                            class:
+                                              - padding-top-half
+                                              - display-flex
+                                              - flex-direction-column
+                                              - text-align-center
+                                              - justify-content-center
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        width: 20%
+                                    slots:
+                                      default:
+                                        - component: oh-button
+                                          config:
+                                            icon-f7: leaf_arrow_circlepath
+                                            iconSize: 30
+                                            color: '=items[props.ecoSwitch].state === "ON" ? "green" : "gray"'
+                                            text: '=items[props.ecoSwitch].state === "ON" ? "Eco ON" : "Eco OFF"'
+                                            action: toggle
+                                            actionItem: =props.ecoSwitch
+                                            actionCommand: ON
+                                            actionCommandAlt: OFF
+                                            iconColor: '=items[props.ecoSwitch].state === "ON" ? "green" : "gray"'
+                                            style:
+                                              --f7-button-font-weight: 200
+                                              height: 80px
+                                              font-size: 16px
+                                            class:
+                                              - padding-top-half
+                                              - display-flex
+                                              - flex-direction-column
+                                              - text-align-center
+                                              - justify-content-center
+                            - component: f7-row
+                              config:
+                                style:
+                                  height: 90px
+                                  width: 100%
+                                class:
+                                  - align-items-center
+                                  - justify-content-center
+                              slots:
+                                default:
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        width: 80%
+                                    slots:
+                                      default:
+                                        - component: oh-slider
+                                          config:
+                                            item: =props.setpointTemp
+                                            vertical: false
+                                            min: 15
+                                            max: 30
+                                            step: 0.5
+                                            label: true
+                                            style:
+                                              --f7-range-bar-size: 2px
+                                              --f7-range-bar-border-radius: 2px
+                                              --f7-range-knob-size: 30px
+                                              --f7-range-knob-color: rgba(247,247,247,1)
+                                              --f7-range-bar-bg-color: rgba(147,147,147,0.5)
+                                              --f7-range-bar-active-bg-color: rgba(87,87,87,0.5)
+                                              --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+                                              --f7-range-label-size: 120px
+                                              --f7-range-label-font-size: 32px
+                                              --f7-range-label-text-color: '=(themeOptions.dark === "dark") ? "255,255,255" : "28,28,29"'
+                                              --f7-range-label-bg-color: rgba(255,255,255,0.0)
+                                              width: 100%
+                                            class:
+                                              - padding-top
+                                              - text-align-center
+                            - component: f7-row
+                              config:
+                                style:
+                                  height: 20px
+                                  width: 100%

@@ -1,0 +1,195 @@
+uid: gw_Sidebar
+tags: []
+props:
+  parameters:
+    - description: Header text
+      label: Title
+      name: Title
+      required: false
+      type: TEXT
+    - description: Color Code for the Top (html HEX code)
+      label: Color Code Top (hex)
+      name: colorCodeTop
+      required: false
+      type: TEXT
+    - description: Color Code for Text (html HEX code)
+      label: Color Code Text (hex)
+      name: colorCodeText
+      required: false
+      type: TEXT
+    - description: Background Image Url
+      label: Background Image Url
+      name: backgroundImageUrl
+      required: false
+      type: TEXT
+  parameterGroups:
+    - name: buttonActionLight
+      context: action
+      label: Action for Button Light
+      description: Action to start
+    - name: buttonActionHeating
+      context: action
+      label: Action for Button Heating
+      description: Action to start
+    - name: buttonActionRules
+      context: actionRules
+      label: Action for Button Rules
+      description: Action to start
+timestamp: Nov 26, 2021, 9:35:23 AM
+component: f7-card
+config:
+  class:
+    - no-padding
+  style:
+    --labelWidget-bg-color: '=(themeOptions.dark === "dark") ? "#3F3F3F" : "#F7F7F7"'
+    --labelWidgetRGBA-bg-color: '=(themeOptions.dark === "dark") ? "rgb(63,63,63)" : "rgb(247,247,247)"'
+    --labelWidgetTextColor: '=(themeOptions.dark === "dark") ? "#F7F7F7" : "#111111"'
+    background: '=(props.backgroundImageUrl) ? "url(" + props.backgroundImageUrl + ")" : (props.colorCodeTop) ? (props.colorCodeTop) : "#AFDFFF"'
+    background-size: cover
+    filter: '=(themeOptions.dark === "dark") ? "brightness(70%)" : "brightness(100%)"'
+slots:
+  default:
+    - component: f7-row
+      config:
+        style:
+          width: 100%
+          height: 100%
+          background: '=(themeOptions.dark === "dark") ? "linear-gradient(180deg, rgba(15,32,39,1) 0%, rgba(32,58,67,1) 50%, rgba(44,83,100,1) 100%)" : "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(171,186,171,1) 100%)"'
+        class:
+          - flex-direction-row
+          - align-items-center
+      slots:
+        default:
+          - component: f7-row
+            config:
+              style:
+                width: 100%
+                height: 50%
+                position: absolute
+                top: 40px
+              class:
+                - display-flex
+                - flex-direction-row
+                - align-items-flex-start
+                - justify-content-center
+            slots:
+              default:
+                - component: f7-row
+                  config:
+                    style:
+                      width: 100%
+                      height: 20%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-space-between
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          actionPropsParameterGroup: buttonActionLight
+                          style:
+                            width: 100%
+                            height: 80%
+                            z-index: 1
+                - component: f7-row
+                  config:
+                    style:
+                      width: 100%
+                      height: 20%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-space-between
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          actionPropsParameterGroup: buttonActionHeating
+                          style:
+                            width: 100%
+                            height: 80%
+                            z-index: 1
+                - component: f7-row
+                  config:
+                    style:
+                      width: 100%
+                      height: 20%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-space-between
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: oh-button
+                        config:
+                          actionPropsParameterGroup: buttonActionRules
+                          style:
+                            width: 100%
+                            height: 80%
+                            z-index: 1
+          - component: f7-row
+            config:
+              style:
+                width: 100%
+                height: 50%
+                position: absolute
+                top: 40px
+              class:
+                - display-flex
+                - flex-direction-row
+                - align-items-flex-start
+                - justify-content-center
+            slots:
+              default:
+                - component: f7-row
+                  config:
+                    style:
+                      width: 100%
+                      height: 20%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-space-between
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          f7: lightbulb
+                          iconColor: var(--labelWidgetTextColor)
+                - component: f7-row
+                  config:
+                    style:
+                      width: 100%
+                      height: 20%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-space-between
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          f7: thermometer
+                          iconColor: var(--labelWidgetTextColor)
+                - component: f7-row
+                  config:
+                    style:
+                      width: 100%
+                      height: 20%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - align-items-space-between
+                      - justify-content-center
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          f7: clock
+                          iconColor: var(--labelWidgetTextColor)
