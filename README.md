@@ -43,4 +43,4 @@ gw_Label.txt
 ### **Examples for tablet and mobile screens**
 ![foto1](images/image_t.png)
 
-![foto2](images/image_m.png)
+![foto2](images/image_m.PNG)
