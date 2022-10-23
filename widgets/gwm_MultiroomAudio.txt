@@ -1,4 +1,4 @@
-uid: gwm_CompDimButton
+uid: gwm_MultiroomAudio
 tags: []
 props:
   parameters:
@@ -12,9 +12,9 @@ props:
       name: SubTitle
       required: false
       type: TEXT
-    - description: Unique Id
-      label: Unique Id
-      name: uniqueID
+    - description: Unique id
+      label: Unique id
+      name: uniqeid
       required: false
       type: TEXT
     - description: Active Icon from the F7 Library
@@ -33,28 +33,30 @@ props:
       required: false
       type: TEXT
     - context: item
-      description: Switch item
-      label: Switch
-      name: switchItem
+      description: Multiroom Switch ON/OFF
+      label: Multiroom Switch
+      name: multiroomSwitch
       required: true
       type: TEXT
     - context: item
-      description: Item for Button State
-      label: Item for State
-      name: itemForState
+      description: Item for Master Volume
+      label: Master Volume
+      name: masterVolume
       required: true
       type: TEXT
     - context: item
-      description: Dimmer item
-      label: Slider
-      name: sliderItem
+      description: Item for Satelite Volume
+      label: Satelite Volume
+      name: satVolume
       required: true
       type: TEXT
-timestamp: Oct 22, 2022, 11:54:58 AM
+timestamp: Oct 22, 2022, 11:28:05 AM
 component: f7-card
 config:
   fill: false
   style:
+    --f7-card-border-width: 2px
+    --f7-card-border-color: rgba(55, 55, 55, 0.15)
     --f7-card-border-radius: 5px
     --f7-card-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3)
     --f7-button-hover-bg-color: rgba(125, 125, 125, 0.15)
@@ -76,11 +78,30 @@ slots:
           background: '=(themeOptions.dark === "dark") ? "rgba(33,33,33,1)" : "rgba(247,247,247,1)"'
       slots:
         default:
+          - component: f7-button
+            config:
+              sheetOpen: ='.'+ props.uniqeid + items[props.multiroomSwitch].state + 'sheetMuRoAudioSetting_mobile'
+              style:
+                color: var(--widgetTextIconColor)
+                width: 100%
+                height: calc(100% - 40px)
+                top: 40px
+                position: absolute
+                z-index: 2
+                --f7-button-border-width: 0px
+                --f7-button-border-radius: 0px
+              class:
+                - display-flex
+                - flex-direction-row
+                - align-items-center
+                - justify-content-left
           - component: f7-row
             config:
               style:
                 width: 100%
-                height: 30px
+                height: 40px
+                position: absolute
+                fill: false
             slots:
               default:
                 - component: f7-col
@@ -101,46 +122,78 @@ slots:
                         config:
                           color: teal
                           title: " "
-                          item: =props.switchItem
+                          item: =props.multiroomSwitch
           - component: f7-row
             config:
               style:
                 width: 100%
-                height: calc(100% - 40px)
-                top: 40px
-                position: absolute
+                height: 100%
             slots:
               default:
-                - component: f7-row
+                - component: f7-col
                   config:
                     style:
                       width: 100%
                       height: 100%
                     class:
-                      - no-padding
                       - display-flex
                       - flex-direction-row
-                      - align-items-flex-center
+                      - align-items-center
                       - justify-content-center
                   slots:
                     default:
-                      - component: f7-button
+                      - component: f7-icon
                         config:
-                          iconF7: '=items[props.itemForState].state === "ON" ? props.activeIcon : props.inactiveIcon'
-                          iconSize: 28
-                          sheetOpen: ='.'+props.uniqueID + 'sheetDimLightSettingMobile'
+                          f7: '=items[props.multiroomSwitch].state === "ON" ? props.activeIcon : props.inactiveIcon'
+                          size: 28
                           style:
                             color: var(--widgetTextIconColor)
-                            width: 100%
-                            height: 100%
-                            z-index: 2
+                            width: 40px
+                            height: 40px
+                            position: absolute
+                            top: calc( 50% - 20px)
+                            z-index: 1
+                          class:
+                            - display-flex
+                            - flex-direction-row
+                            - align-items-center
+                            - justify-content-center
+                      - component: f7-icon
+                        config:
+                          f7: '=items[props.multiroomSwitch].state === "ON" ? props.activeIcon : props.inactiveIcon'
+                          size: '=items[props.multiroomSwitch].state === "ON" ? 16 : 0'
+                          style:
+                            color: var(--widgetTextIconColor)
+                            width: 40px
+                            height: 40px
+                            z-index: 1
+                            position: absolute
+                            top: calc( 50% - 20px)
+                            left: calc( 50% - 60px)
+                          class:
+                            - display-flex
+                            - flex-direction-row
+                            - align-items-center
+                            - justify-content-center
+                      - component: f7-icon
+                        config:
+                          f7: '=items[props.multiroomSwitch].state === "ON" ? props.activeIcon : props.inactiveIcon'
+                          size: '=items[props.multiroomSwitch].state === "ON" ? 16 : 0'
+                          style:
+                            color: var(--widgetTextIconColor)
+                            width: 40px
+                            height: 40px
+                            position: absolute
+                            top: calc( 50% - 20px)
+                            left: calc( 50% + 20px)
+                            z-index: 1
                             --f7-button-border-width: 0px
                             --f7-button-border-radius: 0px
                             --f7-button-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2)
                           class:
                             - display-flex
                             - flex-direction-row
-                            - align-items-flex-start
+                            - align-items-center
                             - justify-content-center
           - component: f7-row
             config:
@@ -151,16 +204,15 @@ slots:
                 height: 20px
             slots:
               default:
-                - component: f7-row
+                - component: f7-col
                   config:
                     style:
                       width: 100%
                       height: 100%
                     class:
-                      - no-padding
                       - display-flex
                       - flex-direction-row
-                      - align-items-flex-center
+                      - align-items-flex-start
                       - justify-content-center
                   slots:
                     default:
@@ -170,8 +222,9 @@ slots:
                           style:
                             font-size: 12px
                             color: var(--widgetTextIconColor)
-                            width: calc100%
-                            font-weight: 400
+                            left: 10px
+                            width: calc(100% - 20px)
+                            font-weight: 300
                             text-transform: none
                             text-align: center
           - component: f7-row
@@ -183,7 +236,7 @@ slots:
                 height: 20px
             slots:
               default:
-                - component: f7-row
+                - component: f7-col
                   config:
                     style:
                       width: 100%
@@ -201,18 +254,19 @@ slots:
                           style:
                             font-size: 10px
                             color: var(--widgetTextIconColor)
-                            width: 100%
-                            font-weight: 300
+                            left: 10px
+                            width: calc(100% - 20px)
+                            font-weight: 100
                             text-transform: none
                             text-align: center
           - component: f7-sheet
             config:
-              class: =props.uniqueID + 'sheetDimLightSettingMobile'
+              class: =props.uniqeid + "ON" + 'sheetMuRoAudioSetting_mobile'
               backdrop: true
               closeOnEscape: true
               style:
                 width: 100%
-                height: 400px
+                height: 280px
             slots:
               default:
                 - component: f7-page
@@ -265,108 +319,188 @@ slots:
                         config:
                           style:
                             width: 100%
-                            height: 40px
+                            height: 50px
                             background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
                           class:
                             - display-flex
                             - flex-direction-row
                             - align-items-flex-end
-                            - justify-content-center
+                            - justify-content-flex-start
                         slots:
                           default:
                             - component: Label
                               config:
-                                text: ON
+                                text: Master Speaker Volume
                                 style:
                                   font-size: 16px
-                                  color: var(--widgetTextIconColor)
-                                  width: calc(100% - 20px)
-                                  font-weight: 600
-                                  text-transform: none
-                                  text-align: center
+                                  font-weight: 200
+                                  color: var(--buttonWidgetTextIconColor)
+                                class:
+                                  - padding-left
+                                  - display-flex
+                                  - flex-direction-row
+                                  - justify-content-center
+                                  - align-items-center
                       - component: f7-row
                         config:
                           style:
                             width: 100%
-                            height: 160px
+                            height: 50px
                             background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
                           class:
                             - display-flex
                             - flex-direction-row
                             - align-items-center
-                            - justify-content-center
+                            - justify-content-space-between
                         slots:
                           default:
-                            - component: oh-toggle-card
+                            - component: oh-button
                               config:
-                                item: =props.switchItem
-                                outline: false
-                                noBorder: true
-                                noShadow: true
-                                color: teal
+                                iconF7: speaker_1
+                                iconSize: 24
+                                action: command
+                                actionItem: =props.masterVolume
+                                actionCommand: = Number.parseInt(items[props.masterVolume].state) - 5
+                                color: '=(themeOptions.dark === "dark") ? "white" : "black"'
                                 style:
+                                  width: 20%
                                   height: 100%
                                 class:
                                   - display-flex
-                                  - flex-direction-row
-                                  - align-items-center
                                   - justify-content-center
-                      - component: f7-row
-                        config:
-                          style:
-                            width: 100%
-                            height: 40px
-                            background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
-                          class:
-                            - display-flex
-                            - flex-direction-row
-                            - align-items-flex-start
-                            - justify-content-center
-                        slots:
-                          default:
-                            - component: Label
-                              config:
-                                text: OFF
-                                style:
-                                  font-size: 16px
-                                  color: var(--widgetTextIconColor)
-                                  width: calc(100% - 20px)
-                                  font-weight: 600
-                                  text-transform: none
-                                  text-align: center
-                                class:
-                                  - display-flex
-                                  - flex-direction-row
                                   - align-items-center
-                                  - justify-content-center
-                      - component: f7-row
-                        config:
-                          style:
-                            width: 100%
-                            height: 100px
-                            background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
-                          class:
-                            - display-flex
-                            - flex-direction-row
-                            - align-items-center
-                            - justify-content-center
-                        slots:
-                          default:
+                                  - flex-direction-row
                             - component: oh-slider
                               config:
-                                label: false
+                                label: true
                                 min: 0
                                 max: 100
-                                item: =props.sliderItem
+                                item: =props.masterVolume
                                 style:
-                                  --f7-range-bar-size: 30px
-                                  --f7-range-bar-border-radius: 30px
+                                  width: 60%
+                                  --f7-range-bar-size: 2px
                                   --f7-range-knob-size: 30px
-                                  --f7-range-bar-active-bg-color: transparent
-                                  --f7-range-bar-bg-color: linear-gradient(to right, rgba(var(--widgetSliderColorRbg_Start),0.9), rgba(var(--widgetSliderColorRbg_End),0.5))
-                                  --f7-range-knob-box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3)
-                                  --f7-range-label-text-color: black
-                                  --f7-range-knob-color: var(--widgetTextIconColor)
-                                  width: 80%
-                                  height: 100%
+                                  --f7-range-bar-border-radius: 2px
+                                  --f7-range-knob-color: rgba(247,247,247,1)
+                                  --f7-range-bar-bg-color: rgba(147,147,147,0.5)
+                                  --f7-range-bar-active-bg-color: rgba(87,87,87,0.5)
+                                  --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+                                  --f7-range-label-size: 120px
+                                  --f7-range-label-font-size: 32px
+                                  --f7-range-label-text-color: widgetTextIconColor
+                                  --f7-range-label-bg-color: rgba(255,255,255,0.0)
                                   z-index: 99 !important
+                                class:
+                                  - display-flex
+                                  - justify-content-center
+                                  - align-items-center
+                                  - flex-direction-row
+                            - component: oh-button
+                              config:
+                                iconF7: speaker_3
+                                iconSize: 24
+                                action: command
+                                actionItem: =props.masterVolume
+                                actionCommand: = Number.parseInt(items[props.masterVolume].state) + 5
+                                color: '=(themeOptions.dark === "dark") ? "white" : "black"'
+                                style:
+                                  width: 20%
+                                  height: 100%
+                                class:
+                                  - justify-content-center
+                                  - display-flex
+                                  - flex-direction-row
+                      - component: f7-row
+                        config:
+                          style:
+                            width: 100%
+                            height: 50px
+                            background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
+                          class:
+                            - display-flex
+                            - flex-direction-row
+                            - align-items-flex-end
+                            - justify-content-flex-start
+                        slots:
+                          default:
+                            - component: Label
+                              config:
+                                text: Satelite Speaker Volume
+                                style:
+                                  font-size: 16px
+                                  font-weight: 200
+                                  color: var(--buttonWidgetTextIconColor)
+                                class:
+                                  - padding-left
+                                  - display-flex
+                                  - flex-direction-row
+                                  - justify-content-center
+                                  - align-items-center
+                      - component: f7-row
+                        config:
+                          style:
+                            width: 100%
+                            height: 50px
+                            background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
+                          class:
+                            - display-flex
+                            - flex-direction-row
+                            - align-items-center
+                            - justify-content-space-between
+                        slots:
+                          default:
+                            - component: oh-button
+                              config:
+                                iconF7: speaker_1
+                                iconSize: 24
+                                action: command
+                                actionItem: =props.satVolume
+                                actionCommand: = Number.parseInt(items[props.satVolume].state) - 5
+                                color: '=(themeOptions.dark === "dark") ? "white" : "black"'
+                                style:
+                                  width: 20%
+                                  height: 100%
+                                class:
+                                  - justify-content-center
+                                  - display-flex
+                                  - flex-direction-row
+                            - component: oh-slider
+                              config:
+                                color: white
+                                label: true
+                                min: 0
+                                max: 100
+                                item: =props.satVolume
+                                style:
+                                  --f7-range-bar-size: 2px
+                                  --f7-range-knob-size: 30px
+                                  --f7-range-bar-border-radius: 2px
+                                  --f7-range-knob-color: rgba(247,247,247,1)
+                                  --f7-range-bar-bg-color: rgba(147,147,147,0.5)
+                                  --f7-range-bar-active-bg-color: rgba(87,87,87,0.5)
+                                  --f7-range-knob-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3)
+                                  --f7-range-label-size: 120px
+                                  --f7-range-label-font-size: 32px
+                                  --f7-range-label-text-color: widgetTextIconColor
+                                  --f7-range-label-bg-color: rgba(255,255,255,0.0)
+                                  z-index: 99 !important
+                                  width: 60%
+                                class:
+                                  - justify-content-center
+                                  - display-flex
+                                  - flex-direction-column
+                            - component: oh-button
+                              config:
+                                iconF7: speaker_3
+                                iconSize: 24
+                                action: command
+                                actionItem: =props.satVolume
+                                actionCommand: = Number.parseInt(items[props.satVolume].state) + 5
+                                color: '=(themeOptions.dark === "dark") ? "white" : "black"'
+                                style:
+                                  width: 20%
+                                  height: 100%
+                                class:
+                                  - justify-content-center
+                                  - display-flex
+                                  - flex-direction-row

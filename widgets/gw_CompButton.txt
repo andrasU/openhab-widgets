@@ -39,18 +39,17 @@ props:
       name: itemForState
       required: true
       type: TEXT
-timestamp: Nov 29, 2021, 9:02:09 PM
+timestamp: Oct 9, 2022, 11:43:20 AM
 component: f7-card
 config:
-  fill: false
+  noBorder: false
+  borderColor: red
   style:
-    --f7-card-border-width: 2px
-    --f7-card-border-color: rgba(55, 55, 55, 0.15)
     --f7-card-border-radius: 5px
+    --f7-card-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3)
     --f7-button-hover-bg-color: rgba(125, 125, 125, 0.15)
     --f7-button-pressed-bg-color: rgba(225, 125, 125, 0.15)
     --f7-button-fill-hover-bg-color: rgba(var(--f7-theme-color-rgb), 0.07)
-    background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
     --popupBackground: '=(themeOptions.dark === "dark") ? "#F0F0F0" : "#FFFFFF"'
     --popupBackgroundHeader: '=(themeOptions.dark === "dark") ? "#F70707" : "#F0F0F0"'
     --widgetTextIconColor: '=(themeOptions.dark === "dark") ? "#FFFFFF" : "#1C1C1D"'
@@ -64,9 +63,27 @@ slots:
         style:
           width: 100%
           height: 100%
-          background: '=(themeOptions.dark === "dark") ? "linear-gradient(180deg, rgba(15,32,39,1) 0%, rgba(32,58,67,1) 50%, rgba(44,83,100,1) 100%)" : "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(171,186,171,1) 100%)"'
+          background: '=(themeOptions.dark === "dark") ? "rgba(33,33,33,1)" : "rgba(247,247,247,1)"'
       slots:
         default:
+          - component: f7-button
+            config:
+              sheetOpen: ='.'+props.uniqueID + 'sheetDimLightSetting'
+              style:
+                color: var(--widgetTextIconColor)
+                width: 100%
+                height: calc(100% - 40px)
+                top: 40px
+                position: absolute
+                z-index: 2
+                --f7-button-border-width: 0px
+                --f7-button-border-radius: 0px
+                --f7-button-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2)
+              class:
+                - display-flex
+                - flex-direction-row
+                - align-items-center
+                - justify-content-center
           - component: f7-row
             config:
               style:
@@ -92,7 +109,7 @@ slots:
                     default:
                       - component: oh-toggle
                         config:
-                          color: '=(themeOptions.dark === "dark") ? "teal" : "gray"'
+                          color: teal
                           title: " "
                           item: =props.switchItem
           - component: f7-row
@@ -114,22 +131,17 @@ slots:
                       - justify-content-center
                   slots:
                     default:
-                      - component: f7-button
+                      - component: f7-icon
                         config:
-                          iconSize: 32
-                          iconF7: '=items[props.itemForState].state === "ON" ? props.activeIcon : props.inactiveIcon'
-                          icon: '=items[props.itemForState].state === "ON" ? props.activeIcon : props.inactiveIcon'
-                          sheetOpen: ='.'+props.uniqueID + 'sheetLightSetting'
+                          f7: '=items[props.itemForState].state === "ON" ? props.activeIcon : props.inactiveIcon'
+                          size: 32
                           style:
                             color: var(--widgetTextIconColor)
-                            width: 100%
+                            width: 40px
                             height: 40px
                             position: absolute
                             top: calc( 50% - 20px)
-                            z-index: 2
-                            --f7-button-border-width: 0px
-                            --f7-button-border-radius: 0px
-                            --f7-button-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2)
+                            z-index: 1
                           class:
                             - display-flex
                             - flex-direction-row
@@ -160,7 +172,7 @@ slots:
                         config:
                           text: =props.Title
                           style:
-                            font-size: 16px
+                            font-size: 15px
                             color: var(--widgetTextIconColor)
                             left: 10px
                             width: calc(100% - 20px)
@@ -201,12 +213,12 @@ slots:
                             text-align: left
           - component: f7-sheet
             config:
-              class: =props.uniqueID + 'sheetLightSetting'
+              class: =props.uniqueID + 'sheetDimLightSetting'
               backdrop: true
               closeOnEscape: true
               style:
                 width: 100%
-                height: 280px
+                height: 300px
             slots:
               default:
                 - component: f7-page
@@ -224,7 +236,7 @@ slots:
                           default:
                             - component: Label
                               config:
-                                text: =props.Title + " - " + props.SubTitle
+                                text: '=(props.SubTitle ==="") ? props.Title + " - " + props.SubTitle : props.Title'
                                 class:
                                   - display-flex
                                   - flex-direction-row
@@ -297,7 +309,7 @@ slots:
                                 outline: false
                                 noBorder: true
                                 noShadow: true
-                                color: gray
+                                color: teal
                                 style:
                                   height: 100%
                                 class:

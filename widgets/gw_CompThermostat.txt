@@ -48,7 +48,7 @@ props:
       required: true
       type: TEXT
   parameterGroups: []
-timestamp: Nov 29, 2021, 7:20:07 PM
+timestamp: Oct 22, 2022, 11:22:21 AM
 component: f7-card
 config:
   fill: false
@@ -56,10 +56,10 @@ config:
     --f7-card-border-width: 2px
     --f7-card-border-color: rgba(55, 55, 55, 0.15)
     --f7-card-border-radius: 5px
+    --f7-card-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3)
     --f7-button-hover-bg-color: rgba(125, 125, 125, 0.15)
     --f7-button-pressed-bg-color: rgba(225, 125, 125, 0.15)
     --f7-button-fill-hover-bg-color: rgba(var(--f7-theme-color-rgb), 0.07)
-    background: '=(themeOptions.dark === "dark") ? "#1C1C1D" : "#FFFFFF"'
     --popupBackground: '=(themeOptions.dark === "dark") ? "#F0F0F0" : "#FFFFFF"'
     --popupBackgroundHeader: '=(themeOptions.dark === "dark") ? "#F70707" : "#F0F0F0"'
     --widgetTextIconColor: '=(themeOptions.dark === "dark") ? "#FFFFFF" : "#1C1C1D"'
@@ -74,9 +74,37 @@ slots:
         style:
           width: 100%
           height: 100%
-          background: '=(themeOptions.dark === "dark") ? "linear-gradient(180deg, rgba(15,32,39,1) 0%, rgba(32,58,67,1) 50%, rgba(44,83,100,1) 100%)" : "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(171,186,171,1) 100%)"'
+          background: '=(themeOptions.dark === "dark") ? "rgba(33,33,33,1)" : "rgba(247,247,247,1)"'
       slots:
         default:
+          - component: f7-button
+            config:
+              sheetOpen: ='.'+props.uniqueID + 'sheetThermostat'
+              style:
+                width: 80px
+                height: 40px
+                position: absolute
+                left: 0px
+              class:
+                - flex-direction-row
+                - display-flex
+                - align-items-center
+                - justify-content-center
+            slots:
+              default:
+                - component: Label
+                  config:
+                    text: '=items[props.onoffSwitch].state =="ON" ? Number(items[props.setpointTemp].state.split(" ")[0]).toFixed(1) : Number(items[props.measuredTemp].state.split(" ")[0]).toFixed(1)'
+                    size: 32
+                    style:
+                      color: var(--widgetTextIconColor)
+                      width: 100%
+                      height: 40px
+                    class:
+                      - flex-direction-row
+                      - display-flex
+                      - align-items-center
+                      - justify-content-flex-start
           - component: f7-button
             config:
               sheetOpen: ='.'+props.uniqueID + 'sheetThermostat'
@@ -107,7 +135,7 @@ slots:
                       - justify-content-flex-start
           - component: f7-button
             config:
-              sheetOpen: ='.'+props.measuredTemp + 'sheetThermostat'
+              sheetOpen: ='.'+props.uniqueID + 'sheetThermostat'
               style:
                 width: 100%
                 height: 100%
@@ -120,7 +148,8 @@ slots:
               default:
                 - component: Label
                   config:
-                    text: =items[props.measuredTemp].state + " °C"
+                    visible: '=items[props.onoffSwitch].state =="ON" ? true : false'
+                    text: =Number(items[props.measuredTemp].state.split(" ")[0]).toFixed(1) + " °C"
                     style:
                       width: 100%
                       height: 100%
@@ -128,6 +157,20 @@ slots:
                       font-weight: 300
                       color: var(--widgetTextIconColor)
                       text-transform: none
+                    class:
+                      - flex-direction-row
+                      - display-flex
+                      - align-items-center
+                      - justify-content-center
+                - component: f7-icon
+                  config:
+                    f7: power
+                    visible: '=items[props.onoffSwitch].state =="ON" ? false : true'
+                    size: 32
+                    style:
+                      color: var(--widgetTextIconColor)
+                      width: 100%
+                      height: 100%
                     class:
                       - flex-direction-row
                       - display-flex
@@ -158,7 +201,7 @@ slots:
                         config:
                           text: =props.Title
                           style:
-                            font-size: 16px
+                            font-size: 15px
                             color: var(--widgetTextIconColor)
                             left: 10px
                             width: calc(100% - 20px)
@@ -225,7 +268,7 @@ slots:
                           default:
                             - component: Label
                               config:
-                                text: =props.Title + " - " + props.SubTitle
+                                text: '=(props.SubTitle ==="") ? props.Title + " - " + props.SubTitle : props.Title'
                                 class:
                                   - display-flex
                                   - flex-direction-row
@@ -412,6 +455,20 @@ slots:
                                   - component: f7-col
                                     config:
                                       style:
+                                        width: 10%
+                                    slots:
+                                      default:
+                                        - component: oh-button
+                                          config:
+                                            iconF7: minus
+                                            disabled: '=items[props.onoffSwitch].state === "ON" ? false : true'
+                                            action: command
+                                            actionItem: =props.setpointTemp
+                                            actionCommand: = Number.parseFloat(items[props.setpointTemp].state) - 1
+                                            color: '=(themeOptions.dark === "dark") ? "white" : "black"'
+                                  - component: f7-col
+                                    config:
+                                      style:
                                         width: 80%
                                     slots:
                                       default:
@@ -419,6 +476,7 @@ slots:
                                           config:
                                             item: =props.setpointTemp
                                             vertical: false
+                                            disabled: '=items[props.onoffSwitch].state === "ON" ? false : true'
                                             min: 15
                                             max: 30
                                             step: 0.5
@@ -439,6 +497,20 @@ slots:
                                             class:
                                               - padding-top
                                               - text-align-center
+                                  - component: f7-col
+                                    config:
+                                      style:
+                                        width: 10%
+                                    slots:
+                                      default:
+                                        - component: oh-button
+                                          config:
+                                            iconF7: plus
+                                            disabled: '=items[props.onoffSwitch].state =="ON" ? false : true'
+                                            action: command
+                                            actionItem: =props.setpointTemp
+                                            actionCommand: = Number.parseFloat(items[props.setpointTemp].state) + 1
+                                            color: '=(themeOptions.dark === "dark") ? "white" : "black"'
                             - component: f7-row
                               config:
                                 style:

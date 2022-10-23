@@ -35,12 +35,16 @@ props:
       context: actionRules
       label: Action for Button Rules
       description: Action to start
-timestamp: Nov 26, 2021, 9:35:23 AM
+timestamp: Sep 30, 2022, 4:06:38 PM
 component: f7-card
 config:
   class:
     - no-padding
   style:
+    --f7-card-border-width: 2px
+    --f7-card-border-color: rgba(55, 55, 55, 0.15)
+    --f7-card-border-radius: 5px
+    --f7-card-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3)
     --labelWidget-bg-color: '=(themeOptions.dark === "dark") ? "#3F3F3F" : "#F7F7F7"'
     --labelWidgetRGBA-bg-color: '=(themeOptions.dark === "dark") ? "rgb(63,63,63)" : "rgb(247,247,247)"'
     --labelWidgetTextColor: '=(themeOptions.dark === "dark") ? "#F7F7F7" : "#111111"'
@@ -54,7 +58,7 @@ slots:
         style:
           width: 100%
           height: 100%
-          background: '=(themeOptions.dark === "dark") ? "linear-gradient(180deg, rgba(15,32,39,1) 0%, rgba(32,58,67,1) 50%, rgba(44,83,100,1) 100%)" : "linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(171,186,171,1) 100%)"'
+          background: '=(themeOptions.dark === "dark") ? "rgba(33,33,33,1)" : "rgba(247,247,247,1)"'
         class:
           - flex-direction-row
           - align-items-center
@@ -82,8 +86,8 @@ slots:
                     class:
                       - display-flex
                       - flex-direction-row
-                      - align-items-space-between
                       - justify-content-center
+                      - align-items-center
                   slots:
                     default:
                       - component: oh-button
@@ -91,8 +95,13 @@ slots:
                           actionPropsParameterGroup: buttonActionLight
                           style:
                             width: 100%
-                            height: 80%
+                            height: 100%
                             z-index: 1
+                          class:
+                            - display-flex
+                            - flex-direction-row
+                            - justify-content-center
+                            - align-items-center
                 - component: f7-row
                   config:
                     style:

@@ -22,7 +22,7 @@ props:
       name: backgroundImageUrl
       required: false
       type: TEXT
-timestamp: Nov 28, 2021, 12:20:02 PM
+timestamp: Oct 2, 2022, 9:19:00 PM
 component: f7-card
 config:
   class:
@@ -31,9 +31,8 @@ config:
     --labelWidget-bg-color: '=(themeOptions.dark === "dark") ? "#3F3F3F" : "#F7F7F7"'
     --labelWidgetRGBA-bg-color: '=(themeOptions.dark === "dark") ? "rgb(63,63,63)" : "rgb(247,247,247)"'
     --labelWidgetTextColor: '=(themeOptions.dark === "dark") ? "#F7F7F7" : "#111111"'
-    background: '=(props.backgroundImageUrl) ? "url(" + props.backgroundImageUrl + ")" : (props.colorCodeTop) ? (props.colorCodeTop) : "#AFDFFF"'
+    background: '=(props.backgroundImageUrl) ? "url(" + props.backgroundImageUrl + ")" : (props.colorCodeTop) ? (props.colorCodeTop) : "#00000000"'
     background-size: cover
-    filter: '=(themeOptions.dark === "dark") ? "brightness(70%)" : "brightness(100%)"'
 slots:
   default:
     - component: f7-row
@@ -41,7 +40,7 @@ slots:
         style:
           width: 100%
           height: 100%
-          background: linear-gradient(118deg, rgba(48,224,255,0.2) 0%, rgba(253,134,45,0.2) 100%)
+          background: '=(themeOptions.dark === "dark") ? "rgba(33,33,33,0)" : "rgba(247,247,247,1)"'
         class:
           - flex-direction-row
           - align-items-center

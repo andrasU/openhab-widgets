@@ -91,7 +91,7 @@ props:
       context: action
       label: Action
       description: Action to start
-timestamp: Nov 28, 2021, 1:15:25 PM
+timestamp: Oct 22, 2022, 11:46:59 AM
 component: f7-card
 config:
   class:
@@ -100,300 +100,237 @@ config:
     --f7-card-border-width: 2px
     --f7-card-border-color: rgba(55, 55, 55, 0.15)
     --f7-card-border-radius: 5px
+    --f7-card-box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3)
     --f7-button-border-width: 0px
     --f7-button-box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.4)
     --f7-button-border-radius: 0px
     --f7-button-border-color: rgba(55, 55, 55, 0.15)
-    --f7-button-bg-color: '=(themeOptions.dark === "dark") ? "#3F3F3F" : "#F7F7F7"'
+    --f7-button-bg-color: '=(themeOptions.dark === "dark") ? "#3F3F3F00" : "#F7F7F700"'
     --f7-button-pressed-bg-color: rgba(125, 125, 125, 0.5)
-    --f7-button-fill-hover-bg-color: rgba(125, 125, 125, 0.1)
+    --f7-button-fill-hover-bg-color: rgba(125, 125, 125, 0.9)
     --roomWidgetUpperTextColor: '=(props.colorCodeTopText_d) ? (props.colorCodeTopText_d) : "#FFFFFF"'
     --roomWidgetLowerPart-bg-color: '=(themeOptions.dark === "dark") ? "#3F3F3F" : "#F7F7F7"'
     --roomWidgetLowerPartRGBA-bg-color: '=(themeOptions.dark === "dark") ? "rgb(63,63,63)" : "rgb(247,247,247)"'
     --roomWidgetBottomTextColor: '=(themeOptions.dark === "dark") ? "#F7F7F7" : "#111111"'
-    background: '=(props.backgroundImageUrl) ? "url(" + props.backgroundImageUrl + ")" : (props.colorCodeTop_d) ? (props.colorCodeTop_d) : "#AFDFFF"'
-    background-size: cover
-    filter: '=(themeOptions.dark === "dark") ? "brightness(70%)" : "brightness(100%)"'
     --f7-navbar-text-color: white
     --f7-bars-text-color: white
     --f7-navbar-link-color: white
 slots:
   default:
-    - component: f7-row
+    - component: oh-button
       config:
+        actionPropsParameterGroup: buttonAction
+        fill: false
         style:
           width: 100%
           height: 100%
+          no-border: true
+          background: '=(props.backgroundImageUrl) ? "url(" + props.backgroundImageUrl + ")" : (props.colorCodeTop_d) ? (props.colorCodeTop_d) : "#AFDFFF"'
+          background-size: cover
         class:
-          - display-flex
-          - flex-direction-row
-          - justify-content-start
-          - align-items-left
+          - no-padding
       slots:
         default:
-          - component: oh-button
+          - component: f7-row
             config:
-              actionPropsParameterGroup: buttonAction
               style:
                 width: 100%
-                height: 100%
-                opacity: 0%
-                z-index: 3
-          - component: Label
-            config:
-              text: =props.header
-              style:
-                top: 0px
-                position: absolute
-                font-weight: 400
-                font-size: 20px
-                text-transform: none
-                color: var(--roomWidgetUpperTextColor)
-                width: 100%
-                height: 100%
-                opacity: 100%
-                z-index: 2
-              class:
-                - padding-left
-                - padding-top
-                - display-flex
-                - flex-direction-row
-                - justify-content-start
-                - align-items-flex-start
-                - text-align-left
-          - component: Label
-            config:
-              text: =props.header
-              style:
-                top: 0px
-                position: absolute
-                font-weight: 400
-                font-size: 20px
-                text-transform: none
-                color: var(--roomWidgetUpperTextColor)
-                width: 100%
-                height: 100%
-                opacity: 100%
-                z-index: 2
-                filter: blur(5px) opacity(80%)
-              class:
-                - padding-left
-                - padding-top
-                - display-flex
-                - flex-direction-row
-                - justify-content-start
-                - align-items-flex-start
-                - text-align-left
-    - component: f7-row
-      config:
-        style:
-          position: relative
-          top: 0px
-          background: var(--roomWidgetLowerPart-bg-color)
-          width: 100%
-          height: 1px
-        class:
-          - display-flex
-          - flex-direction-row
-          - justify-content-center
-          - align-items-flex=end
-    - component: f7-row
-      config:
-        style:
-          position: relative
-          top: 0px
-          width: 100%
-          height: 24px
-          background: var(--roomWidgetLowerPart-bg-color)
-          opacity: 80%
-        class: '=(props.showLowerPart) ? "" : "display-none"'
-      slots:
-        default:
-          - component: f7-col
-            config:
-              style:
-                width: 30px
-                height: 100%
+                height: calc(100% - 50px)
               class:
                 - display-flex
                 - flex-direction-row
                 - justify-content-center
-                - align-items-center
-            slots:
-              default:
-                - component: f7-icon
-                  config:
-                    f7: lightbulb
-                    size: 16px
-                    style:
-                      color: var(--roomWidgetBottomTextColor)
-                    class: '=(props.lightState) ? "" : "display-none"'
-          - component: f7-col
-            config:
-              style:
-                width: 30px
-                height: 100%
-              class:
-                - display-flex
-                - flex-direction-row
-                - justify-content-center
-                - align-items-center
-            slots:
-              default:
-                - component: f7-icon
-                  config:
-                    f7: speaker_3
-                    size: 16px
-                    style:
-                      color: var(--roomWidgetBottomTextColor)
-                    class: '=(props.receiverState) ? "" : "display-none"'
-          - component: f7-col
-            config:
-              style:
-                width: 60px
-                height: 100%
-              class:
-                - display-flex
-                - flex-direction-row
-                - justify-content-center
-                - align-items-center
-            slots:
-              default:
-                - component: Label
-                  config:
-                    text: =Number(items[props.roomTemperature].state.split(' ')[0]).toFixed(1)+" °C"
-                    style:
-                      font-weight: 400
-                      font-size: 16px
-                      color: var(--roomWidgetBottomTextColor)
-                    class:
-                      - text-align-center
-    - component: f7-row
-      config:
-        style:
-          position: relative
-          top: 0px
-          width: 100%
-          height: 20px
-          opacity: 80%
-          background: var(--roomWidgetLowerPart-bg-color)
-        class: '=(props.showLowerPart) ? "" : "display-none"'
-      slots:
-        default:
-          - component: f7-col
-            config:
-              style:
-                width: 30px
-                height: 100%
-              class:
-                - display-flex
-                - flex-direction-row
-                - justify-content-center
-                - align-items-flex-start
-            slots:
-              default:
-                - component: Label
-                  config:
-                    text: '=(props.lightState) ? items[props.lightState].state : ""'
-                    style:
-                      font-weight: 300
-                      font-size: 8px
-                      color: var(--roomWidgetBottomTextColor)
-                    class:
-                      - display-flex
-                      - flex-direction-column
-                      - text-align-center
-          - component: f7-col
-            config:
-              style:
-                width: 30px
-                height: 100%
-              class:
-                - display-flex
-                - flex-direction-row
-                - justify-content-center
-                - align-items-flex-start
-            slots:
-              default:
-                - component: Label
-                  config:
-                    text: '=(props.receiverState) ? items[props.receiverState].state : ""'
-                    style:
-                      overflow: hidden
-                      font-weight: 300
-                      font-size: 8px
-                      color: var(--roomWidgetBottomTextColor)
-                    class:
-                      - display-flex
-                      - flex-direction-column
-                      - text-align-center
-          - component: f7-col
-            config:
-              style:
-                width: 60px
-                height: 100%
-              class:
-                - display-flex
-                - flex-direction-row
-                - justify-content-center
-                - align-items-flex-start
-            slots:
-              default:
-                - component: Label
-                  config:
-                    text: '=(props.roomSetTemperature) ? items[props.roomSetTemperature].state+" °C" : ""'
-                    style:
-                      color: var(--roomWidgetBottomTextColor)
-                      overflow: hidden
-                      font-weight: 300
-                      font-size: 8px
-                    class:
-                      - display-flex
-                      - flex-direction-column
-                      - text-align-center
-    - component: f7-sheet
-      config:
-        backdrop: true
-        animate: true
-        tabletFullscreen: false
-        class: =props.popupId + 'popupRoom'
-        style:
-          width: 100%
-          height: 100%
-          --f7-popup-box-shadow: 0px 20px 44px rgba(0, 0, 0, 0.5)
-          --f7-popup-push-border-radius: 10px
-          --f7-popup-tablet-border-radius: 10px
-      slots:
-        default:
-          - component: f7-navbar
-            config:
-              noHairline: true
-              style:
-                backdrop-filter: blur(5px)
-                background: rgba(155, 155, 155, 0.1)
+                - align-items-flex-end
+                - no-padding
             slots:
               default:
                 - component: Label
                   config:
                     text: =props.header
-                    class:
-                      - align-items-center
-                      - justify-content-center
                     style:
-                      margin-left: 20px
                       font-weight: 300
                       font-size: 20px
-                - component: f7-nav-right
+                      text-transform: none
+                      color: var(--roomWidgetUpperTextColor)
+                      width: 100%
+                      height: 100%
+                      opacity: 100%
+                      text-shadow: 0px 0px 6px rgba(0,0,0,1.0)
+                    class:
+                      - padding-left
+                      - padding-top
+                      - display-flex
+                      - flex-direction-row
+                      - justify-content-start
+                      - align-items-flex-start
+                      - text-align-left
+          - component: f7-row
+            config:
+              style:
+                width: 100%
+                height: 30px
+                background: var(--roomWidgetLowerPart-bg-color)
+                opacity: 80%
+              class: '=(props.showLowerPart) ? "" : "display-none"'
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      width: 50px
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - justify-content-center
+                      - align-items-center
                   slots:
                     default:
-                      - component: f7-button
+                      - component: f7-icon
                         config:
-                          iconF7: multiply_circle_fill
-                          iconSize: 20
+                          f7: lightbulb
+                          size: 16px
                           style:
-                            color: var(--buttonWidgetTextIconColor)
+                            color: var(--roomWidgetBottomTextColor)
+                          class: '=(props.lightState) ? "" : "display-none"'
+                - component: f7-col
+                  config:
+                    style:
+                      width: 50px
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - justify-content-center
+                      - align-items-center
+                  slots:
+                    default:
+                      - component: f7-icon
+                        config:
+                          f7: speaker_3
+                          size: 16px
+                          style:
+                            color: var(--roomWidgetBottomTextColor)
+                          class: '=(props.receiverState) ? "" : "display-none"'
+                - component: f7-col
+                  config:
+                    style:
+                      width: calc(100% - 180px)
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - justify-content-center
+                      - align-items-center
+                - component: f7-col
+                  config:
+                    style:
+                      width: 80px
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - justify-content-center
+                      - align-items-center
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: =Number(items[props.roomTemperature].state.split(' ')[0]).toFixed(1)+" °C"
+                          style:
+                            font-weight: 400
+                            font-size: 16px
+                            color: var(--roomWidgetBottomTextColor)
                           class:
-                            - align-items-center
-                            - justify-content-center
-                          sheetClose: true
-          - component: page:page_5a0dddb9b2
+                            - text-align-center
+          - component: f7-row
+            config:
+              style:
+                width: 100%
+                height: 20px
+                opacity: 80%
+                background: var(--roomWidgetLowerPart-bg-color)
+              class: '=(props.showLowerPart) ? "" : "display-none"'
+            slots:
+              default:
+                - component: f7-col
+                  config:
+                    style:
+                      width: 50px
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-col
+                      - justify-content-center
+                      - align-items-flex-end
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: '=(props.lightState) ? items[props.lightState].state : ""'
+                          style:
+                            font-weight: 300
+                            font-size: 8px
+                            color: var(--roomWidgetBottomTextColor)
+                          class:
+                            - display-flex
+                            - flex-direction-column
+                            - text-align-center
+                - component: f7-col
+                  config:
+                    style:
+                      width: 50px
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - justify-content-center
+                      - align-items-flex-end
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: '=(props.receiverState) ? items[props.receiverState].state : ""'
+                          style:
+                            overflow: hidden
+                            font-weight: 300
+                            font-size: 8px
+                            color: var(--roomWidgetBottomTextColor)
+                          class:
+                            - display-flex
+                            - flex-direction-column
+                            - text-align-center
+                - component: f7-col
+                  config:
+                    style:
+                      width: calc(100% - 180px)
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - justify-content-center
+                      - align-items-felx-end
+                - component: f7-col
+                  config:
+                    style:
+                      width: 80px
+                      height: 100%
+                    class:
+                      - display-flex
+                      - flex-direction-row
+                      - justify-content-center
+                      - align-items-flex-end
+                  slots:
+                    default:
+                      - component: Label
+                        config:
+                          text: '=(props.roomSetTemperature) ? items[props.roomSetTemperature].state+" °C" : ""'
+                          style:
+                            color: var(--roomWidgetBottomTextColor)
+                            overflow: hidden
+                            font-weight: 300
+                            font-size: 8px
+                          class:
+                            - display-flex
+                            - flex-direction-column
+                            - text-align-center
